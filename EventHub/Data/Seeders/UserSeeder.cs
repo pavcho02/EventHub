@@ -8,5 +8,10 @@ namespace Data.Seeders
 {
     internal class UserSeeder
     {
+        public async Task SeedAsync(EventHubDbContext context)
+        {
+            //to do
+        }
+            
     }
 }

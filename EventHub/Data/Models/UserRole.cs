@@ -9,6 +9,6 @@ namespace Data.Models
 {
     internal class UserRole : IdentityRole
     {
-        public UserRole RoleType { get; set; }
+        public Enums.UserRole RoleType { get; set; }
     }
 }

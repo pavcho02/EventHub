@@ -13,6 +13,10 @@ namespace Data.Models
         public User()
         {
             Id = Guid.NewGuid().ToString();
+            CreatedEvents = new HashSet<Event>();
+            EventsToAttend = new HashSet<Participation>();
+            Reviews = new HashSet<EventReview>();
+            Reports = new HashSet<EventReport>();
         }
 
         [Key]
@@ -29,6 +33,7 @@ namespace Data.Models
         [PersonalData]
         public string PhoneNumber { get; set; }
 
+        [Required]
         [PersonalData]
         public DateTime DateOfBirth { get; set; }
 
@@ -38,7 +43,10 @@ namespace Data.Models
 
         public virtual ICollection<Event> CreatedEvents { get; set; }
 
-        public virtual ICollection<Event> EventsToAttend { get; set; }
+        public virtual ICollection<Participation> EventsToAttend { get; set; }
 
+        public virtual ICollection<EventReview> Reviews { get; set; }
+
+        public virtual ICollection<EventReport> Reports { get; set; }
     }
 }
