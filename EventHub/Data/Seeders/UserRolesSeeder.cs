@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.Seeders
 {
-    internal class UserRolesSeeder
+    public class UserRolesSeeder
     {
         public async Task SeedAsync(EventHubDbContext context)
         {

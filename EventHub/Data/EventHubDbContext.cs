@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data
 {
-    internal class EventHubDbContext : IdentityDbContext<User, UserRole, string>
+    public class EventHubDbContext : IdentityDbContext<User, UserRole, string>
     {
         public EventHubDbContext(DbContextOptions<EventHubDbContext> options) : base(options)
         {

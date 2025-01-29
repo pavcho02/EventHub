@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    internal class UserRole : IdentityRole
+    public class UserRole : IdentityRole
     {
         public Enums.UserRole RoleType { get; set; }
     }

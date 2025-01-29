@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    internal class User : IdentityUser
+    public class User : IdentityUser
     {
         public User()
         {

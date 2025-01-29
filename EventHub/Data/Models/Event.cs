@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    internal class Event
+    public class Event
     {
         public Event()
         {

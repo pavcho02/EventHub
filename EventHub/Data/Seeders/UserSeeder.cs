@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.Seeders
 {
-    internal class UserSeeder
+    public class UserSeeder
     {
         public async Task SeedAsync(EventHubDbContext context)
         {

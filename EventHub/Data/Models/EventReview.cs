@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    internal class EventReview
+    public class EventReview
     {
         public string UserId { get; set; }
         public virtual User User { get; set; }

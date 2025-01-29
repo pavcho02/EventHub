@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.Enums
 {
-    internal enum EventType
+    public enum EventType
     {
         Concert,
         Children,

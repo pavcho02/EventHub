@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Enums
+namespace Business
 {
-    public enum UserRole
+    public class EmailSender
     {
-        Admin = 0,
-        User = 1,
-        EventOrganizer = 2
     }
 }
