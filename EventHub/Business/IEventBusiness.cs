@@ -15,7 +15,7 @@ namespace Business
 
         public Task UpdateAsync(Event e);
 
-        public Task<Event> GetAsync(string id);
+        public Task<Event?> GetAsync(string id);
 
         public ICollection<Event> GetAllByCreator(string userId);
 

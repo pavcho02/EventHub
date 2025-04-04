@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business
 {
@@ -15,8 +16,8 @@ namespace Business
 
         public async Task AddAsync(EventReport eventReport)
         {
-            this.context.EventReports.Add(eventReport);
-            await this.context.SaveChangesAsync();
+            context.EventReports.Add(eventReport);
+            await context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(string eventId, string userId)
@@ -26,6 +27,34 @@ namespace Business
             {
                 context.EventReports.Remove(eventReport);
                 await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task HandleReport(EventReport eventReport)
+        {
+            var eventInContext = await context.Events.FindAsync(eventReport.EventId);
+            if (eventInContext != null)
+            {
+                context.Events.Remove(eventInContext);
+                await context.SaveChangesAsync();
+
+                // Send email to the event owner
+                var eventOwner = await context.Users.FindAsync(eventInContext.OwnerId);
+                if (eventOwner != null)
+                {
+                    await emailSender.SendEmailForEventDeleteByReportAsync(eventOwner.Email, eventInContext);
+                }
+
+                // Send email to participants
+                var participants = await context.Participations
+                    .Where(p => p.EventId == eventReport.EventId)
+                    .Select(p => p.User)
+                    .ToListAsync();
+
+                foreach (var participant in participants)
+                {
+                    await emailSender.SendEventCancelationEmailAsync(participant.Email, eventInContext);
+                }
             }
         }
     }

@@ -22,29 +22,33 @@ namespace Business
 
         public async Task AddAsync(Event e)
         {
-            this.context.Events.Add(e);
-            await this.context.SaveChangesAsync();
+            context.Events.Add(e);
+            await context.SaveChangesAsync();
         }
-
         public async Task UpdateAsync(Event e)
         {
             var eventInContext = await context.Events.FindAsync(e);
             if (eventInContext != null)
             {
-                //to do - send email
                 context.Entry(eventInContext).CurrentValues.SetValues(e);
                 await context.SaveChangesAsync();
+
+                // Send email to all participants about the update
+                foreach (var p in e.Participants)
+                {
+                    await emailSender.SendEventUpdateEmailAsync(p.User.Email, e);
+                }
             }
         }
 
-        public async Task<Event> GetAsync(string id)
+        public async Task<Event?> GetAsync(string id)
         {
             return await context.Events.FindAsync(id);
         }
 
         public ICollection<Event> GetAllByCreator(string userId)
         {
-            return context.Events.Where(e => e.OwnerId == userId).ToList();
+            return context.Events.Where(e => e.OwnerId.Equals(userId)).ToList();
         }
 
         public async Task<ICollection<Event>> GetAllAsync()
@@ -62,9 +66,14 @@ namespace Business
             var eventInContext = await context.Events.FindAsync(id);
             if (eventInContext != null)
             {
-                //to do - send email
                 context.Events.Remove(eventInContext);
                 await context.SaveChangesAsync();
+
+                // Send email to all participants about the cancellation
+                foreach (var p in eventInContext.Participants)
+                {
+                    await emailSender.SendEventCancelationEmailAsync(p.User.Email, eventInContext);
+                }
             }
         }
     }

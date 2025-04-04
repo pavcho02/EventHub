@@ -13,5 +13,7 @@ namespace Business
 
         public Task DeleteAsync(string eventId, string userId);
 
+        public Task HandleReport(EventReport eventReport);
+
     }
 }

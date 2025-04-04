@@ -13,10 +13,14 @@ namespace Business
         public Task SendEmailAsync(string sender, string senderName, 
             string receiver, string subject, string htmlMessage);
 
-        public Task SendEventCancelationEmailAsync(string recerver, Event event);
+        public Task SendEmailAsync(string receiver, string subject, string htmlMessage);
 
-        public Task SendEventUpdateEmailAsync(string recerver, Event event);
+        public Task SendEventCancelationEmailAsync(string recerver, Event e);
 
+        public Task SendEventUpdateEmailAsync(string recerver, Event e);
 
+        public Task SendEmailConfirmationAsync(string receiver, string callBackUrl);
+
+        public Task SendEmailForEventDeleteByReportAsync(string receiver, Event e);
     }
 }

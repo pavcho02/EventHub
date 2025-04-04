@@ -24,14 +24,19 @@ namespace Business
             await context.SaveChangesAsync();
         }
 
-        public async Task<EventReview> GetAsync(string eventId, string userId)
+        public async Task<EventReview?> GetAsync(string eventId, string userId)
         {
             return await context.EventReviews.FindAsync(eventId, userId);
         }
 
         public async Task<ICollection<EventReview>> GetAllByEventAsync(string eventId)
         {
-            return await context.EventReviews.Where(ev => ev.EventId == eventId).ToListAsync();
+            return await context.EventReviews.Where(ev => ev.EventId.Equals(eventId)).ToListAsync();
+        }
+
+        public async Task<ICollection<EventReview>> GetAllByUserAsync(string userId)
+        {
+            return await context.EventReviews.Where(ev => ev.UserId.Equals(userId)).ToListAsync();
         }
 
         public async Task UpdateAsync(EventReview eventReview)

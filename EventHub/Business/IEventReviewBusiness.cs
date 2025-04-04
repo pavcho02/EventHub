@@ -11,9 +11,11 @@ namespace Business
     {
         public Task AddAsync(EventReview eventReview);
 
-        public Task<EventReview> GetAsync(string eventId, string userId);
+        public Task<EventReview?> GetAsync(string eventId, string userId);
 
         public Task<ICollection<EventReview>> GetAllByEventAsync(string eventId);
+
+        public Task<ICollection<EventReview>> GetAllByUserAsync(string userId);
 
         public Task UpdateAsync(EventReview eventReview);
 
