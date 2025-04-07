@@ -22,5 +22,7 @@ namespace Business
         public Task SendEmailConfirmationAsync(string receiver, string callBackUrl);
 
         public Task SendEmailForEventDeleteByReportAsync(string receiver, Event e);
+
+        public Task SendEmailForAccountRoleChangeAsync(string receiver);
     }
 }

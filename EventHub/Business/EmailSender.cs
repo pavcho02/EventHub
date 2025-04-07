@@ -86,5 +86,15 @@ namespace Business
                 $"<p>{senderName}</p>";
             await SendEmailAsync(receiver, subject, htmlMessage);
         }
+
+        public async Task SendEmailForAccountRoleChangeAsync(string receiver)
+        {
+            var subject = "Account role change approval";
+            var htmlMessage = $"<p>Dear {receiver},</p>" +
+                $"<p>Your account has been successfully changed to event organizer role.</p>" +
+                $"<p>Best regards,</p>" +
+                $"<p>{senderName}</p>";
+            await SendEmailAsync(receiver, subject, htmlMessage);
+        }
     }
 }

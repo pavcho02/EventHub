@@ -14,7 +14,7 @@ namespace Data.Seeders
         {
             if (context.Roles.Any())
             {
-                return;
+                return; // DB has been seeded
             }
 
             var roles = new List<Models.UserRole>()

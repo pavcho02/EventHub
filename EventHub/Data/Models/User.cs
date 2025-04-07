@@ -28,6 +28,8 @@ namespace Data.Models
         [Required]
         public DateTime DateOfBirth { get; set; }
 
+        public RoleRequest RoleRequest { get; set; }
+
         public virtual ICollection<Event> CreatedEvents { get; set; }
 
         public virtual ICollection<Participation> EventsToAttend { get; set; }

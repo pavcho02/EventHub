@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class EventHubDbContextSeeder
+    public class EventHubDbContextSeeder
     {
         private readonly EventHubDbContext context;
         public EventHubDbContextSeeder(EventHubDbContext context)

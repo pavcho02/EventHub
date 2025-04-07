@@ -26,6 +26,14 @@ namespace Data
                 .WithOne(e => e.Owner)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            //Relationship one-to-one
+            //An user can have only one role request, and a role request belongs to one user
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.RoleRequest)
+                .WithOne(r => r.User)
+                .HasForeignKey<RoleRequest>(r => r.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             //Relationship one-to-many
             //An event can only have one owner, but an user can own multiple events
             modelBuilder.Entity<Event>()
@@ -95,6 +103,6 @@ namespace Data
         public DbSet<EventReview> EventReviews { get; set; }
         public DbSet<EventReport> EventReports { get; set; }
         public DbSet<Participation> Participations { get; set; }
-
+        public DbSet<RoleRequest> RoleRequests { get; set; }
     }
 }
