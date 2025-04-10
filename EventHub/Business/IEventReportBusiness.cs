@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace Business
         public Task DeleteAsync(string eventId, string userId);
 
         public Task HandleReport(EventReport eventReport);
+
+        public List<TModel> GetAllReportsByEventId<TModel>(string eventId, Func<EventReport, TModel> mapFunc);
 
     }
 }

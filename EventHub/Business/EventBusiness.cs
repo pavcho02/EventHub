@@ -56,6 +56,12 @@ namespace Business
             return await context.Events.ToListAsync();
         }
 
+        public ICollection<TModel> GetAllSummary<TModel>(Func<Event, TModel> mapFunc)
+        {
+            return context.Events.Select(mapFunc).ToList();
+        }
+
+
         public bool IsAlreadyAdded(string name)
         {
             return context.Events.Any(e => e.Title.ToLower().Equals(name.ToLower()));
@@ -76,5 +82,36 @@ namespace Business
                 }
             }
         }
+
+        public async Task<double> CalculateEventRating(string eventId)
+        {
+            var reviews = await context.EventReviews.Where(er => er.EventId == eventId).ToListAsync();
+            if (reviews.Any())
+            {
+                return reviews.Average(r => r.Rating);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public async Task<ICollection<Event>> GetRecentEvents()
+        {
+            return await context.Events
+                .Where(e => e.StartTime > DateTime.Now)
+                .OrderBy(e => e.StartTime)
+                .Take(10)
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<Event>> GetTopRatedEvents()
+        {
+            return await context.Events
+                .OrderByDescending(e => e.Reviews.Average(r => r.Rating))
+                .Take(10)
+                .ToListAsync();
+        }
+
     }
 }

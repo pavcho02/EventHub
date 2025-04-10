@@ -57,5 +57,10 @@ namespace Business
                 }
             }
         }
+
+        public List<TModel> GetAllReportsByEventId<TModel>(string eventId, Func<EventReport, TModel> mapFunc)
+        {
+            return context.EventReports.Where(er => er.EventId == eventId).Select(mapFunc).ToList();
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Data.Models
         public string LastName { get; set; }
 
         [Required]
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
 
         public RoleRequest RoleRequest { get; set; }
 

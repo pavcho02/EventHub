@@ -2,6 +2,7 @@
 using Data.Enums;
 using Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,16 @@ namespace Business
                 context.RoleRequests.Remove(roleRequest);
                 await context.SaveChangesAsync();
             }
+        }
+
+        public async Task<TModel> GetByUserAsync<TModel>(string userId, Func<RoleRequest, TModel> mapFunc)
+        {
+            return mapFunc(await context.RoleRequests.FindAsync(userId));
+        }
+
+        public ICollection<TModel> GetAll<TModel>(Func<RoleRequest, TModel> mapFunc)
+        {
+            return context.RoleRequests.Select(mapFunc).ToList();
         }
     }
 }

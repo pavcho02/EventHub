@@ -1,20 +1,29 @@
 using System.Diagnostics;
+using Business;
+using Data.Models;
 using EventHub.Models;
+using EventHub.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventHub.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IEventBusiness eventBusiness;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IEventBusiness eventBusiness)
         {
-            _logger = logger;
+            this.eventBusiness = eventBusiness;
         }
 
         public IActionResult Index()
         {
+            //var viewModel = new HomePageViewModel
+            //{
+            //    RecentEvents = eventBusiness.GetRecentEvents().ToList(),
+            //    TopRatedEvents = eventBusiness.GetTopRatedEvents().ToList(),
+            //};
             return View();
         }
 

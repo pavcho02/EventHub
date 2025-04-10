@@ -21,8 +21,16 @@ namespace Business
 
         public Task<ICollection<Event>> GetAllAsync();
 
+        public ICollection<TModel> GetAllSummary<TModel>(Func<Event, TModel> mapFunc);
+
         public Task DeleteAsync(string id);
 
         public bool IsAlreadyAdded(string name);
+
+        public Task<double> CalculateEventRating(string eventId);
+
+        public Task<ICollection<Event>> GetRecentEvents();
+
+        public Task<ICollection<Event>> GetTopRatedEvents();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,9 @@ namespace Business
         public Task ApproveRoleChangeAsync(string userId);
 
         public Task RejectRoleChangeAsync(string userId);
+
+        public Task<TModel> GetByUserAsync<TModel>(string userId, Func<RoleRequest, TModel> mapFunc);
+
+        public ICollection<TModel> GetAll<TModel>(Func<RoleRequest, TModel> mapFunc);
     }
 }

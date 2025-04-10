@@ -1,5 +1,4 @@
 using EventHub;
-using EventHub.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
