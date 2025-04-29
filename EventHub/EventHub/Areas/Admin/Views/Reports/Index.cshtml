@@ -1,5 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using EventHub.Models.ViewModels
+@model ICollection<EventReportIndexViewModel>
+
+<section>
+
+    <h1>Event reports</h1>
+
+    <form class="" asp-controller="Reports" asp-action="Index" method="get">
+        <input class="" name="Search" placeholder="Event title"/>
+        <input class="" type="submit" value="Search"/>
+    </form>
+
+    <table>
+        <tr>
+            <th>Event</th>
+            <th>Total reports</th>
+        </tr>
+        @{
+            foreach (var er in @Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Reports" asp-action="Details" asp-route-id="@er.EventId">@er.EventTitle</a>
+                    </td>
+                    <td>@er.reportsCount</td>
+                </tr>
+            }
+        }
+    </table>
+
+</section>
+

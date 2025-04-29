@@ -4,6 +4,8 @@ namespace EventHub.Models.ViewModels
 {
     public class EventReportDetailsViewModel
     {
+        public string EventId { get; set; }
+
         public string EventTitle { get; set; }
 
         public string EventDescription { get; set; }
@@ -26,10 +28,11 @@ namespace EventHub.Models.ViewModels
 
         public List<EventReportViewModel> EventReports;
 
-        public EventReportDetailsViewModel(string eventTitle, string eventDescription, DateTime eventStartTime, 
+        public EventReportDetailsViewModel(string id, string eventTitle, string eventDescription, DateTime eventStartTime, 
             DateTime eventEndTime, TargerAudience eventTargetAudience, string eventLocation,EventType eventType, 
             string eventOwnerFirstName, string eventOwnerLastName, string eventOwnerEmail, List<EventReportViewModel> eventReports)
         {
+            this.EventId = id;
             this.EventTitle = eventTitle;
             this.EventDescription = eventDescription;
             this.EventStartTime = eventStartTime;

@@ -1,5 +1,48 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using EventHub.Models.ViewModels
+@model EventReportDetailsViewModel
+
+<section>
+    <h1>Event's Reports Details</h1>
+
+    <h5>@Model.EventTitle</h5>
+
+    <p>@Model.EventDescription</p>
+
+    <p>@Model.EventStartTime</p>
+
+    <p>@Model.EventEndTime</p>
+
+    <p>@Model.EventLocation</p>
+
+    <p>@Model.EventTargetAudience</p>
+
+    <p>@Model.EventType</p>
+
+    <p>@Model.EventDescription</p>
+
+    <p>@Model.EventOwnerFirstName</p>
+
+    <p>@Model.EventOwnerLastName</p>
+
+    <p>@Model.EventOwnerEmail</p>
+
+    @{
+        foreach (var report in @Model.EventReports)
+        {
+            <p>@report.AuthorFirstName</p>
+
+            <p>@report.AuthorLastName</p>
+
+            <p>@report.AuthorEmail</p>
+
+            <p>@report.ReportDescription</p>
+
+            <a asp-area="Admin" asp-controller="Reports" asp-action="HandleReport" asp-route-reportId="@report.EventId" 
+            asp-route-userId="@report.AuthorId">Handle Report</a>
+
+            <a asp-area="Admin" asp-controller="Reports" asp-action="DeleteReport" asp-route-reportId="@report.EventId"
+               asp-route-userId="@report.AuthorId">Delete Report</a>
+        }
+    }
+
+</section>

@@ -33,7 +33,7 @@ namespace Business
             }            
         }
 
-        public async Task UnparticipateToEvent(string userId, string eventId)
+        public async Task UnParticipateToEvent(string userId, string eventId)
         {
             if (!context.Participations.Any(p => p.UserId == userId && p.EventId == eventId)
                 || await context.Users.FindAsync(userId) != null || await context.Events.FindAsync(eventId) != null)

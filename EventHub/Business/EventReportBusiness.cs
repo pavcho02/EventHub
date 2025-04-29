@@ -30,9 +30,9 @@ namespace Business
             }
         }
 
-        public async Task HandleReport(EventReport eventReport)
+        public async Task HandleReport(string eventId, string userId)
         {
-            var eventInContext = await context.Events.FindAsync(eventReport.EventId);
+            var eventInContext = await context.Events.FindAsync(eventId);
             if (eventInContext != null)
             {
                 context.Events.Remove(eventInContext);
@@ -47,7 +47,7 @@ namespace Business
 
                 // Send email to participants
                 var participants = await context.Participations
-                    .Where(p => p.EventId == eventReport.EventId)
+                    .Where(p => p.EventId == eventId)
                     .Select(p => p.User)
                     .ToListAsync();
 

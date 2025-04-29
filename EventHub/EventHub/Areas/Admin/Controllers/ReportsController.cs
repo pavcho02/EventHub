@@ -39,5 +39,17 @@ namespace EventHub.Areas.Admin.Controllers
                 eventReportBusiness.GetAllReportsByEventId<EventReportViewModel>(eventItem.Id , mapper.MapToEventReportViewModel));
             return View(model);
         }
+
+        public async Task<IActionResult> HandleReport(string eventId, string userId)
+        {
+            await eventReportBusiness.HandleReport(eventId, userId);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DeleteReport(string eventId, string userId)
+        {
+            await eventReportBusiness.DeleteAsync(eventId, userId);
+            return RedirectToAction("Index");
+        }
     }
 }

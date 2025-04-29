@@ -1,5 +1,25 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using EventHub.Models.ViewModels
+@model ICollection<RequestIndexViewModel>
+
+<section>
+    <h1>Users' requests</h1>
+
+    <table>
+        <tr>
+            <th>Request By User</th>
+            <th>More Details</th>
+        </tr>
+        @{
+            foreach (var req in @Model)
+            {
+                string name = req.UserFirstName + " " + req.UserLastName;
+                <tr>
+                    <td>@name</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Requests" asp-action="Details" asp-route-userId="@req.UserId">more</a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</section>

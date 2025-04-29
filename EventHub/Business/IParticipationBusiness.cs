@@ -10,6 +10,6 @@ namespace Business
     {
         public Task ParticipateToEvent(string userId, string eventId);
 
-        public Task UnparticipateToEvent(string userId, string eventId);
+        public Task UnParticipateToEvent(string userId, string eventId);
     }
 }

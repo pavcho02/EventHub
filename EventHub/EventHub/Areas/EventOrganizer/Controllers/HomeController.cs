@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EventHub.Areas.Admin.Controllers
+namespace EventHub.Areas.EventOrganizer.Controllers
 {
-    [Area("Admin")]
+    [Area("EventOrganizer")]
     [AutoValidateAntiforgeryToken]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "EventOrganizer")]
     public class HomeController : Controller
     {
         public IActionResult Index()

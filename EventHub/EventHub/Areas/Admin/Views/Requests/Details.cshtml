@@ -1,5 +1,21 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using EventHub.Models.ViewModels
+@model RequestDetailsViewModel
+
+<section>
+    <h1>Request's Details</h1>
+
+    <p>@Model.UserFirstName</p>
+
+    <p>@Model.UserLastName</p>
+
+    <p>@Model.UserEmail</p>
+
+    <p>@Model.UserDateofBirth</p>
+
+    <p>@Model.RequestDescription</p>
+
+    <button asp-area="Admin" asp-controller="Requets" asp-action="ApproveRequest" asp-route-userId="@Model.UserId">Approve</button>
+
+    <button asp-area="Admin" asp-controller="Requets" asp-action="RejectRequest" asp-route-userId="@Model.UserId">Reject</button>
+
+</section>

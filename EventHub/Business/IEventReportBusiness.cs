@@ -14,7 +14,7 @@ namespace Business
 
         public Task DeleteAsync(string eventId, string userId);
 
-        public Task HandleReport(EventReport eventReport);
+        public Task HandleReport(string eventId, string userId);
 
         public List<TModel> GetAllReportsByEventId<TModel>(string eventId, Func<EventReport, TModel> mapFunc);
 
