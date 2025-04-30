@@ -22,12 +22,14 @@ namespace EventHub.Areas.Admin.Controllers
             this.mapper = mapper;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var model = eventBusiness.GetAllSummary<EventReportIndexViewModel>(mapper.MapToEventReportIndexViewModel);
             return View(model);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
             var eventItem = await eventBusiness.GetAsync(id);
@@ -40,12 +42,14 @@ namespace EventHub.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public async Task<IActionResult> HandleReport(string eventId, string userId)
         {
             await eventReportBusiness.HandleReport(eventId, userId);
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
         public async Task<IActionResult> DeleteReport(string eventId, string userId)
         {
             await eventReportBusiness.DeleteAsync(eventId, userId);

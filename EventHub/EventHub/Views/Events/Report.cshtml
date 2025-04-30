@@ -1,0 +1,13 @@
+﻿@model EventHub.Models.InputModels.EventReportInputModel;
+
+<section>
+    <h1>Report an event</h1>
+    <form asp-area="User" asp-controller="Events" asp-action="Report" method="post">
+        <section>
+            <label asp-for="@Model.Description"></label>
+            <input asp-for="@Model.Description"/>
+        </section>
+
+        <button type="submit">Report</button>
+    </form>
+</section>

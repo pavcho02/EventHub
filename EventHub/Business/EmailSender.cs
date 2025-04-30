@@ -59,7 +59,6 @@ namespace Business
                 $"<p>{e.Description}</p>" +
                 $"<p>{e.Location}</p>" +
                 $"<p>{e.StartTime}</p>" +
-                $"<p>{e.EndTime}</p>" +
                 $"<p>{e.TargetAudience}</p>" +
                 $"<p>Visit EventHub platform for more information</p>" +
                 $"<p>Best regards,</p>" +

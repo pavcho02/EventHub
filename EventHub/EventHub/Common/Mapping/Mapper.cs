@@ -18,20 +18,20 @@ namespace EventHub.Common.Mapping
 
         public EventReportViewModel MapToEventReportViewModel(EventReport eventReport)
         {
-            return new EventReportViewModel(eventReport.EventId, eventReport.User.FirstName, eventReport.User.LastName,
+            return new EventReportViewModel(eventReport.EventId, eventReport.UserId,eventReport.User.FirstName, eventReport.User.LastName,
                 eventReport.User.Email, eventReport.Description);
         }
 
         public EventReportIndexViewModel MapToEventReportIndexViewModel(Event eventItem)
         {
             var reportsCount = eventItem.Reports.Count;
-            return new EventReportIndexViewModel(eventItem.Title, reportsCount);
+            return new EventReportIndexViewModel(eventItem.Id, eventItem.Title, reportsCount);
         }
 
         public EventReportDetailsViewModel EventReportDetailsViewModel(Event eventItem, List<EventReportViewModel> eventReports)
         {
-            return new EventReportDetailsViewModel(eventItem.Title, eventItem.Description, eventItem.StartTime, 
-                eventItem.EndTime, eventItem.TargetAudience, eventItem.Location, eventItem.EventType, eventItem.Owner.FirstName,
+            return new EventReportDetailsViewModel(eventItem.Id, eventItem.Title, eventItem.Description, eventItem.StartTime, 
+                eventItem.TargetAudience, eventItem.Location, eventItem.EventType, eventItem.Owner.FirstName,
                 eventItem.Owner.LastName, eventItem.Owner.Email, eventReports);
         }
 

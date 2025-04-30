@@ -29,9 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\EventOrganizer\Views\Home\" />
-    <Folder Include="Areas\EventOrganizer\Views\Events\" />
-    <Folder Include="Views\Events\" />
+    <Folder Include="Areas\Identity\Pages\Account\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,18 @@
+﻿@model EventHub.Models.InputModels.EventReviewInputModel;
+
+<section>
+    <h1>Review an event</h1>
+    <form asp-area="User" asp-controller="Events" asp-action="Review" method="post">
+        <section>
+            <label asp-for="@Model.Comment"></label>
+            <input asp-for="@Model.Comment" />
+        </section>
+
+        <section>
+            <label asp-for="@Model.Rating"></label>
+            <input asp-for="@Model.Rating" type="radio" step="1" min="1" max="10"/>
+        </section>
+
+        <button type="submit">Review</button>
+    </form>
+</section>

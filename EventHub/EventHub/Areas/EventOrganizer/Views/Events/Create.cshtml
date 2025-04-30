@@ -2,12 +2,12 @@
 @model EventHub.Models.InputModels.EventInputModel;
 
 <section>
-    <h1>Edit Event</h1>
+    <h1>Create Event</h1>
     <section>
-        <form asp-area="EventOrganizer" asp-controller="Events" asp-action="Update" method="post">
+        <form asp-area="EventOrganizer" asp-controller="Events" asp-action="Add" method="post">
             <section>
                 <label asp-for="@Model.Title"></label>
-                <input asp-for="@Model.Title"/>
+                <input asp-for="@Model.Title" />
                 <span asp-validation-for="@Model.Title"></span>
             </section>
 
@@ -41,7 +41,7 @@
                         asp-items="Html.GetEnumSelectList<EventType>()"></select>
             </section>
 
-            <button type="submit">Update Event</button>
+            <button type="submit">Create Event</button>
         </form>
     </section>
 </section>

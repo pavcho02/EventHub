@@ -8,10 +8,10 @@ namespace EventHub.Models.ViewModels
 
         public List<EventViewModel> TopRatedEvents { get; set; }
 
-        public HomePageViewModel(List<EventViewModel> upcomingEvents, List<EventViewModel> topRatedEvents)
+        public HomePageViewModel(List<EventViewModel> UpcomingEvents, List<EventViewModel> TopRatedEvents)
         {
-            this.UpcomingEvents = upcomingEvents;
-            this.TopRatedEvents = topRatedEvents;
+            this.UpcomingEvents = UpcomingEvents;
+            this.TopRatedEvents = TopRatedEvents;
         }
     }
 }

@@ -18,12 +18,15 @@ namespace EventHub.Areas.Admin.Controllers
             this.roleRequestBusiness = roleRequestBusiness;
             this.mapper = mapper;
         }
+
+        [HttpGet]
         public IActionResult Index()
         {
             var model = roleRequestBusiness.GetAll<RequestIndexViewModel>(mapper.MapToRequestIndexViewModel);
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult Details(string userId)
         {
             var model = roleRequestBusiness.GetByUserAsync<RequestDetailsViewModel>(userId, mapper.MapToRequestDetailsViewModel);
@@ -36,6 +39,7 @@ namespace EventHub.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public IActionResult ApproveRequest(string userId)
         {
             roleRequestBusiness.ApproveRoleChangeAsync(userId);
@@ -43,6 +47,7 @@ namespace EventHub.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
         public IActionResult RejectRequest(string userId)
         {
             roleRequestBusiness.RejectRoleChangeAsync(userId);

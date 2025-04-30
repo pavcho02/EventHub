@@ -12,11 +12,9 @@ namespace EventHub.Models.ViewModels
 
         public DateTime EventStartTime { get; set; }
 
-        public DateTime EventEndTime { get; set; }
-
         public string EventLocation { get; set; }
 
-        public TargerAudience EventTargetAudience { get; set; }
+        public TargetAudience EventTargetAudience { get; set; }
 
         public EventType EventType { get; set; }
 
@@ -29,14 +27,13 @@ namespace EventHub.Models.ViewModels
         public List<EventReportViewModel> EventReports;
 
         public EventReportDetailsViewModel(string id, string eventTitle, string eventDescription, DateTime eventStartTime, 
-            DateTime eventEndTime, TargerAudience eventTargetAudience, string eventLocation,EventType eventType, 
+            TargetAudience eventTargetAudience, string eventLocation,EventType eventType, 
             string eventOwnerFirstName, string eventOwnerLastName, string eventOwnerEmail, List<EventReportViewModel> eventReports)
         {
             this.EventId = id;
             this.EventTitle = eventTitle;
             this.EventDescription = eventDescription;
             this.EventStartTime = eventStartTime;
-            this.EventEndTime = eventEndTime;
             this.EventLocation = eventLocation;
             this.EventTargetAudience = eventTargetAudience;
             this.EventType = eventType;

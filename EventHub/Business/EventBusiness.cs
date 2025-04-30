@@ -25,10 +25,11 @@ namespace Business
             context.Events.Add(e);
             await context.SaveChangesAsync();
         }
-        public async Task UpdateAsync(Event e)
+
+        public async Task UpdateAsync(Event e, string userId)
         {
             var eventInContext = await context.Events.FindAsync(e);
-            if (eventInContext != null)
+            if (eventInContext != null && eventInContext.OwnerId == userId)
             {
                 context.Entry(eventInContext).CurrentValues.SetValues(e);
                 await context.SaveChangesAsync();
@@ -67,10 +68,10 @@ namespace Business
             return context.Events.Any(e => e.Title.ToLower().Equals(name.ToLower()));
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAsync(string eventId, string userId)
         {
-            var eventInContext = await context.Events.FindAsync(id);
-            if (eventInContext != null)
+            var eventInContext = await context.Events.FindAsync(eventId);
+            if (eventInContext != null && eventInContext.OwnerId == userId)
             {
                 context.Events.Remove(eventInContext);
                 await context.SaveChangesAsync();

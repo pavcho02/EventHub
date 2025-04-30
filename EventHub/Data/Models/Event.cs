@@ -30,14 +30,12 @@ namespace Data.Models
         public DateTime StartTime { get; set; }
 
         [Required]
-        public DateTime EndTime { get; set; }
-
-        [Required]
         public string Location { get; set; }
 
         [Required]
-        public TargerAudience TargetAudience { get; set; }
+        public TargetAudience TargetAudience { get; set; }
 
+        [Required]
         public EventType EventType { get; set; }
 
         public string OwnerId { get; set; }

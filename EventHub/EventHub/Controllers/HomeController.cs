@@ -17,13 +17,13 @@ namespace EventHub.Controllers
             this.eventBusiness = eventBusiness;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //var viewModel = new HomePageViewModel
-            //{
-            //    RecentEvents = eventBusiness.GetRecentEvents().ToList(),
-            //    TopRatedEvents = eventBusiness.GetTopRatedEvents().ToList(),
-            //};
+            var viewModel = new HomePageViewModel
+            (
+                new List<EventViewModel>(await eventBusiness.GetRecentEvents()),
+                eventBusiness.GetTopRatedEvents()
+            );
             return View();
         }
 

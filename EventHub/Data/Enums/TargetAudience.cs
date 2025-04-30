@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.Enums
 {
-    public enum TargerAudience
+    public enum TargetAudience
     {
         Children,
         Over12,

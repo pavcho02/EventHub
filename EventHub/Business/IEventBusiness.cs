@@ -13,7 +13,7 @@ namespace Business
     {
         public Task AddAsync(Event e);
 
-        public Task UpdateAsync(Event e);
+        public Task UpdateAsync(Event e, string userId);
 
         public Task<Event?> GetAsync(string id);
 
@@ -23,7 +23,7 @@ namespace Business
 
         public ICollection<TModel> GetAllSummary<TModel>(Func<Event, TModel> mapFunc);
 
-        public Task DeleteAsync(string id);
+        public Task DeleteAsync(string eventId, string userId);
 
         public bool IsAlreadyAdded(string name);
 
