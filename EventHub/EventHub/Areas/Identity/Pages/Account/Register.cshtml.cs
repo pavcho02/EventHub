@@ -86,7 +86,8 @@ namespace EventHub.Areas.Identity.Pages.Account
             {
                 var user = new User
                 {
-                    UserName = Input.Username,
+                    //Username and email are the same
+                    UserName = Input.Email,
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
