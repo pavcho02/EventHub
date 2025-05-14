@@ -1,0 +1,75 @@
+﻿@page
+@using EventHub.Common.Enums
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1 class="row1">@ViewData["Title"]</h1>
+
+<section class="row1">
+    <section class="col-md-4">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4 style="text-align:center">Create a new account.</h4>
+            <hr />
+            <section asp-validation-summary="All" class="text-danger"></section>
+            <section class="form-group">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </section>
+            <section class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </section>
+            <section class="form-group">
+                <label asp-for="Input.Username"></label>
+                <input asp-for="Input.Username" class="form-control" />
+                <section><small class="text-dark">Note: Username can't be changed!</small></section>
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
+            </section>
+            <section class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <section><small class="text-dark">Note: Email confirmation required!</small></section>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </section>
+            <section class="form-group">
+                <label asp-for="Input.DateOfBirth"></label>
+                <input asp-for="Input.DateOfBirth" class="form-control" type="date"/>
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+            </section>
+            <section class="form-group">
+                <label asp-for="Input.UserType"></label>
+                <br />
+                <select class="form-control" asp-for="Input.UserType">
+                    <option value="@UserRoleInput.User">User</option>
+                    <option value="@UserRoleInput.EventOrganizer">EventOrganizer</option>
+                </select>
+                <section><small class="text-dark">Note: EventOrganizer account must be approved by admin</small></section>
+                <span asp-validation-for="Input.UserType" class="text-danger"></span>
+            </section>
+            <section class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <section>
+                    <small class="text-dark">
+                        Note: Must contain uppercase and lowercase letters, digits and non-alphanumeric characters!
+                    </small>
+                </section>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </section>
+            <section class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </section>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </section>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
