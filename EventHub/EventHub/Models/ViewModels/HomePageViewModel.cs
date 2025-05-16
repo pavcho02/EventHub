@@ -13,5 +13,11 @@ namespace EventHub.Models.ViewModels
             this.UpcomingEvents = UpcomingEvents;
             this.TopRatedEvents = TopRatedEvents;
         }
+
+        public HomePageViewModel()
+        {
+            this.UpcomingEvents = new List<EventViewModel>();
+            this.TopRatedEvents = new List<EventViewModel>();
+        }
     }
 }

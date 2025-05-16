@@ -17,5 +17,10 @@ namespace EventHub.Models.ViewModels
             this.RequestDescription = requestDescription;
             this.UserDateofBirth = userBirthDate;
         }
+
+        public RequestDetailsViewModel() : base()
+        {
+            
+        }
     }
 }

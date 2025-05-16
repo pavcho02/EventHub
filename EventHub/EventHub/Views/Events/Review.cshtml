@@ -1,18 +1,34 @@
 ﻿@model EventHub.Models.InputModels.EventReviewInputModel;
+@{
+    ViewData["Title"] = "Review an event";
+}
 
-<section>
-    <h1>Review an event</h1>
-    <form asp-area="User" asp-controller="Events" asp-action="Review" method="post">
-        <section>
-            <label asp-for="@Model.Comment"></label>
-            <input asp-for="@Model.Comment" />
+<section class="container mt-5">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <form asp-area="User" asp-controller="Events" asp-action="Review" method="post" class="needs-validation" novalidate>
+        <section class="mb-3">
+            <label asp-for="Comment" class="form-label"></label>
+            <textarea asp-for="Comment" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Comment" class="text-danger"></span>
         </section>
 
-        <section>
-            <label asp-for="@Model.Rating"></label>
-            <input asp-for="@Model.Rating" type="radio" step="1" min="1" max="10"/>
+        <section class="mb-3">
+            <label asp-for="Rating" class="form-label">Rating (1-10)</label>
+            <select asp-for="Rating" class="form-select">
+                @for (int i = 1; i <= 10; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+            <span asp-validation-for="Rating" class="text-danger"></span>
         </section>
 
-        <button type="submit">Review</button>
+        <button type="submit" class="btn btn-primary">Submit Review</button>
     </form>
+    <a asp-area="User" asp-controller="Events" asp-action="DeleteReview" asp-route-eventId="@Model.EventId" class="btn btn-danger">Delete</a>
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

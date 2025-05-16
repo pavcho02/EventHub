@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using EventHub.Models.InputModels;
 using EventHub.Models.ViewModels;
 
 namespace EventHub.Common.Mapping
@@ -13,8 +14,16 @@ namespace EventHub.Common.Mapping
 
         public EventReportIndexViewModel MapToEventReportIndexViewModel(Event eventItem);
 
-        public EventReportDetailsViewModel EventReportDetailsViewModel(Event eventItem, List<EventReportViewModel> eventReports);
+        public EventReportDetailsViewModel EventReportDetailsViewModel(Event eventItem);
 
         public EventViewModel MapToEventViewModel(Event eventItem);
+
+        public EventReviewViewModel MapToEventReviewViewModel(EventReview eventReview);
+
+        public EventDetailsViewModel MapToEventDetailsViewModel(Event eventItem);
+
+        public EventInputModel MapToEventInputModel(Event eventItem);
+
+        public EventIndexViewModel MapToEventIndexViewModel(Event eventItem);
     }
 }

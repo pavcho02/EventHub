@@ -27,9 +27,9 @@ namespace EventHub.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(string userId)
+        public async Task<IActionResult> Details(string userId)
         {
-            var model = roleRequestBusiness.GetByUserAsync<RequestDetailsViewModel>(userId, mapper.MapToRequestDetailsViewModel);
+            var model = await roleRequestBusiness.GetByUserAsync<RequestDetailsViewModel>(userId, mapper.MapToRequestDetailsViewModel);
 
             if (model == null)
             {
@@ -39,18 +39,16 @@ namespace EventHub.Areas.Admin.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult ApproveRequest(string userId)
+        public async Task<IActionResult> ApproveRequest(string userId)
         {
-            roleRequestBusiness.ApproveRoleChangeAsync(userId);
+            await roleRequestBusiness.ApproveRoleChangeAsync(userId);
 
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public IActionResult RejectRequest(string userId)
+        public async Task<IActionResult> RejectRequest(string userId)
         {
-            roleRequestBusiness.RejectRoleChangeAsync(userId);
+            await roleRequestBusiness.RejectRoleChangeAsync(userId);
 
             return RedirectToAction("Index");
         }

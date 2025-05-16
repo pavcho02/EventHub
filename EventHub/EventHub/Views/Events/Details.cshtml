@@ -1,33 +1,69 @@
 ﻿@using System.Security.Claims
-@model Data.Models.Event;
+@using EventHub.Models.ViewModels;
+@model EventDetailsViewModel
 
-<section>
-    <h1>Event's Details</h1>
-    @{
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if(Model.Participants.Where(u => u.UserId == userId).Any())
+@{
+    ViewData["Title"] = "Event Details";
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    bool isParticipant = Model.Participants.Any(p => p.UserId == userId);
+}
+
+<section class="container mt-5">
+    <h2 class="mb-4">@Model.Title</h2>
+
+    <section class="mb-3">
+        <strong>Description:</strong>
+        <p>@Model.Description</p>
+
+        <strong>Date & Time:</strong>
+        <p>@Model.StartTime.ToString("f")</p>
+
+        <strong>Location:</strong>
+        <p>@Model.Location</p>
+
+        <strong>Target Audience:</strong>
+        <p>@Model.TargetAudience</p>
+
+        <strong>Event Type:</strong>
+        <p>@Model.EventType</p>
+    </section>
+
+    <section class="mb-4">
+        @if (isParticipant)
         {
-            <a asp-area="User" asp-controller="Events" asp-action="UnParticipate" asp-route-eventId="@Model.Id">Unparticipate</a>
+            <a asp-area="User" asp-controller="Events" asp-action="UnParticipate" asp-route-eventId="@Model.Id" class="btn btn-warning me-2">Unparticipate</a>
         }
         else
         {
-            <a asp-area="User" asp-controller="Events" asp-action="Participate" asp-route-eventId="@Model.Id">Participate</a>
+            <a asp-area="User" asp-controller="Events" asp-action="Participate" asp-route-eventId="@Model.Id" class="btn btn-success me-2">Participate</a>
         }
-    }
 
-    <a asp-area="User" asp-controller="Events" asp-action="Review" asp-route-eventId="@Model.Id">Give a review</a>
-
-    <a asp-area="User" asp-controller="Events" asp-action="Report" asp-route-eventId="@Model.Id">Report</a>
-
-    <h5>@Model.Title</h5>
-
-    <p>@Model.Description</p>
-
-    <p>@Model.StartTime</p>
-
-    <p>@Model.Location</p>
-
-    <p>@Model.TargetAudience</p>
-
-    <p>@Model.EventType</p>
+        <a asp-area="User" asp-controller="Events" asp-action="Review" asp-route-eventId="@Model.Id" class="btn btn-primary me-2">Give a Review</a>
+        <a asp-area="User" asp-controller="Events" asp-action="Report" asp-route-eventId="@Model.Id" class="btn btn-danger">Report</a>
+    </section>
 </section>
+
+<section>
+    <h3 class="mt-4">Reviews</h3>
+    @if (Model.Reviews != null && Model.Reviews.Any())
+    {
+        <ul class="list-group">
+            @foreach (var review in Model.Reviews)
+            {
+                <li class="list-group-item">
+                    <strong>@review.UserFirstName @review.UserLastName</strong>
+                    <p>@review.Comment</p>
+                    <p>(@review.Rating/10</p>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No reviews yet.</p>
+    }
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

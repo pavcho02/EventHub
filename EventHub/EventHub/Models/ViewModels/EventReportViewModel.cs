@@ -23,5 +23,10 @@
             this.AuthorEmail = authorEmail;
             this.ReportDescription = reportDescription;
         }
+
+        public EventReportViewModel()
+        {
+            
+        }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business
 {
-    public class ParticipationBusiness
+    public class ParticipationBusiness : IParticipationBusiness
     {
         private readonly EventHubDbContext context;
 

@@ -1,0 +1,23 @@
+﻿@using EventHub.Models.InputModels
+@model RoleRequestInputModel
+@{
+    ViewData["Title"] = "Role Upgrade";
+}
+
+<section class="container mt-4">
+    <h1 class="mb-3">@ViewData["Title"]</h1>
+
+    <form asp-controller="Home" asp-action="UpgradeAccount" method="post">
+        <section class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </section>
+
+        <button type="submit" class="btn btn-primary">Submit Request</button>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

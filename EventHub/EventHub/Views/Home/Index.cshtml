@@ -1,5 +1,44 @@
 ﻿@model EventHub.Models.ViewModels.HomePageViewModel;
 
-<section>
+@{
+    ViewData["Title"] = "Welcome to EventHub";
+}
 
+<section class="container mt-5">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <div class="row">
+        <!-- Recent Events -->
+        <div class="col-md-6">
+            <h3>Recent Events</h3>
+            <ul class="list-group">
+                @foreach (var evt in Model.UpcomingEvents)
+                {
+                    <li class="list-group-item">
+                        <h5>@evt.Title</h5>
+                        <p class="mb-1"><strong>Date:</strong> @evt.StartTime.ToString("g")</p>
+                        <p class="mb-1"><strong>Event Type:</strong> @evt.EventType</p>
+                        <a class="btn btn-sm btn-outline-primary" asp-area="" asp-controller="Events" asp-action="Details" asp-route-eventId="@evt.Id">View Details</a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <!-- Top Rated Events -->
+        <div class="col-md-6">
+            <h3>Top Rated Events</h3>
+            <ul class="list-group">
+                @foreach (var evt in Model.TopRatedEvents)
+                {
+                    <li class="list-group-item">
+                        <h5>@evt.Title</h5>
+                        <p class="mb-1"><strong>Rating:</strong> @(evt.Rating.ToString("0.0") ?? "N/A") / 10</p>
+                        <p class="mb-1"><strong>Date:</strong> @evt.StartTime.ToString("g")</p>
+                        <p class="mb-1"><strong>Event Type:</strong> @evt.EventType</p>
+                        <a class="btn btn-sm btn-outline-success" asp-area="" asp-controller="Events" asp-action="Details" asp-route-eventId="@evt.Id">View Details</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
 </section>

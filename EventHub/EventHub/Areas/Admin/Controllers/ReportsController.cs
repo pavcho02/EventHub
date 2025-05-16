@@ -32,24 +32,21 @@ namespace EventHub.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
-            var eventItem = await eventBusiness.GetAsync(id);
+            var eventItem = await eventBusiness.GetAsync(id, mapper.EventReportDetailsViewModel);
             if (eventItem == null)
             {
                 return NotFound();
             }
-            var model = mapper.EventReportDetailsViewModel(eventItem, 
-                eventReportBusiness.GetAllReportsByEventId<EventReportViewModel>(eventItem.Id , mapper.MapToEventReportViewModel));
-            return View(model);
+
+            return View(eventItem);
         }
 
-        [HttpPost]
         public async Task<IActionResult> HandleReport(string eventId, string userId)
         {
             await eventReportBusiness.HandleReport(eventId, userId);
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
         public async Task<IActionResult> DeleteReport(string eventId, string userId)
         {
             await eventReportBusiness.DeleteAsync(eventId, userId);

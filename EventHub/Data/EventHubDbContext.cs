@@ -58,7 +58,7 @@ namespace Data
                 .HasOne(p => p.User)
                 .WithMany(u => u.EventsToAttend)
                 .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             //The primary key for EventReview is a composite key made up of the EventId and UserId
             modelBuilder.Entity<EventReview>()
@@ -76,7 +76,7 @@ namespace Data
                 .HasOne(ev => ev.User)
                 .WithMany(u => u.Reviews)
                 .HasForeignKey(ev => ev.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             //The primary key for EventReport is a composite key made up of the EventId and UserIdq
             modelBuilder.Entity<EventReport>()
@@ -88,13 +88,13 @@ namespace Data
                 .HasOne(er => er.Event)
                 .WithMany(e => e.Reports)
                 .HasForeignKey(er => er.EventId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<EventReport>()
                 .HasOne(er => er.User)
                 .WithMany(u => u.Reports)
                 .HasForeignKey(er => er.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }

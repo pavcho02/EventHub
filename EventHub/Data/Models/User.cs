@@ -12,7 +12,6 @@ namespace Data.Models
     {
         public User()
         {
-            Id = Guid.NewGuid().ToString();
             CreatedEvents = new HashSet<Event>();
             EventsToAttend = new HashSet<Participation>();
             Reviews = new HashSet<EventReview>();
@@ -28,7 +27,7 @@ namespace Data.Models
         [Required]
         public DateOnly DateOfBirth { get; set; }
 
-        public RoleRequest RoleRequest { get; set; }
+        public virtual RoleRequest RoleRequest { get; set; }
 
         public virtual ICollection<Event> CreatedEvents { get; set; }
 

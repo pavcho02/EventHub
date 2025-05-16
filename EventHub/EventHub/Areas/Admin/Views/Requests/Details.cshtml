@@ -1,21 +1,40 @@
 ﻿@using EventHub.Models.ViewModels
 @model RequestDetailsViewModel
 
-<section>
-    <h1>Request's Details</h1>
+<section class="request-details">
+    <h1>Request Details</h1>
 
-    <p>@Model.UserFirstName</p>
+    <dl>
+        <dt>First Name</dt>
+        <dd>@Model.UserFirstName</dd>
 
-    <p>@Model.UserLastName</p>
+        <dt>Last Name</dt>
+        <dd>@Model.UserLastName</dd>
 
-    <p>@Model.UserEmail</p>
+        <dt>Email</dt>
+        <dd>@Model.UserEmail</dd>
 
-    <p>@Model.UserDateofBirth</p>
+        <dt>Date of Birth</dt>
+        <dd>@Model.UserDateofBirth.ToString("dd-MM-yyyy")</dd>
 
-    <p>@Model.RequestDescription</p>
+        <dt>Reason for Request</dt>
+        <dd>@Model.RequestDescription</dd>
+    </dl>
 
-    <button asp-area="Admin" asp-controller="Requets" asp-action="ApproveRequest" asp-route-userId="@Model.UserId">Approve</button>
+    <div class="action-buttons">
+        <a asp-area="Admin" asp-controller="Requests"
+           asp-action="ApproveRequest"
+           asp-route-userId="@Model.UserId"
+           class="btn btn-success">
+            Approve
+        </a>
 
-    <button asp-area="Admin" asp-controller="Requets" asp-action="RejectRequest" asp-route-userId="@Model.UserId">Reject</button>
-
+        <a asp-area="Admin"
+           asp-controller="Requests"
+           asp-action="RejectRequest"
+           asp-route-userId="@Model.UserId"
+           class="btn btn-danger">
+            Reject
+        </a>
+    </div>
 </section>

@@ -1,7 +1,7 @@
 ﻿@using EventHub.Models.ViewModels
 @model EventReportDetailsViewModel
 
-<section>
+<!--<section>
     <h1>Event's Reports Details</h1>
 
     <h5>@Model.EventTitle</h5>
@@ -22,23 +22,86 @@
 
     <p>@Model.EventOwnerEmail</p>
 
-    @{
-        foreach (var report in @Model.EventReports)
-        {
-            <p>@report.AuthorFirstName</p>
+@{/*
+    foreach (var report in @Model.EventReports)
+    {
+                    <p>@report.AuthorFirstName</p>
 
-            <p>@report.AuthorLastName</p>
+                    <p>@report.AuthorLastName</p>
 
-            <p>@report.AuthorEmail</p>
+                    <p>@report.AuthorEmail</p>
 
-            <p>@report.ReportDescription</p>
+                    <p>@report.ReportDescription</p>
 
-            <a asp-area="Admin" asp-controller="Reports" asp-action="HandleReport" asp-route-reportId="@report.EventId" 
-            asp-route-userId="@report.AuthorId">Handle Report</a>
+                    <a asp-area="Admin" asp-controller="Reports" asp-action="HandleReport" asp-route-reportId="@report.EventId"
+                    asp-route-userId="@report.AuthorId">Handle Report</a>
 
-            <a asp-area="Admin" asp-controller="Reports" asp-action="DeleteReport" asp-route-reportId="@report.EventId"
-               asp-route-userId="@report.AuthorId">Delete Report</a>
-        }
+                    <a asp-area="Admin" asp-controller="Reports" asp-action="DeleteReport" asp-route-reportId="@report.EventId"
+                       asp-route-userId="@report.AuthorId">Delete Report</a>
     }
+*/}
 
+</section>-->
+
+<section class="container mt-4">
+    <h1 class="mb-4">Event's Report Details</h1>
+
+    <div class="mb-4">
+        <h3>@Model.EventTitle</h3>
+
+        <dl class="row">
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">@Model.EventDescription</dd>
+
+            <dt class="col-sm-3">Start Time</dt>
+            <dd class="col-sm-9">@Model.EventStartTime.ToString("f")</dd>
+
+            <dt class="col-sm-3">Location</dt>
+            <dd class="col-sm-9">@Model.EventLocation</dd>
+
+            <dt class="col-sm-3">Target Audience</dt>
+            <dd class="col-sm-9">@Model.EventTargetAudience</dd>
+
+            <dt class="col-sm-3">Event Type</dt>
+            <dd class="col-sm-9">@Model.EventType</dd>
+
+            <dt class="col-sm-3">Owner Name</dt>
+            <dd class="col-sm-9">@($"{Model.EventOwnerFirstName} {Model.EventOwnerLastName}")</dd>
+
+            <dt class="col-sm-3">Owner Email</dt>
+            <dd class="col-sm-9">@Model.EventOwnerEmail</dd>
+        </dl>
+    </div>
+
+    <h4 class="mb-3">Reports</h4>
+
+    @if (Model.EventReports == null || !Model.EventReports.Any())
+    {
+        <p>No reports found for this event.</p>
+    }
+    else
+    {
+        <div class="list-group">
+            @foreach (var report in Model.EventReports)
+            {
+                <div class="list-group-item mb-3">
+                    <h5>@($"{report.AuthorFirstName} {report.AuthorLastName}")</h5>
+                    <p><strong>Email:</strong> @report.AuthorEmail</p>
+                    <p><strong>Report:</strong> @report.ReportDescription</p>
+                    <div>
+                        <a asp-area="Admin" asp-controller="Reports" asp-action="HandleReport"
+                           asp-route-reportId="@report.EventId" asp-route-userId="@report.AuthorId"
+                           class="btn btn-sm btn-success me-2">
+                            Handle Report
+                        </a>
+                        <a asp-area="Admin" asp-controller="Reports" asp-action="DeleteReport"
+                           asp-route-reportId="@report.EventId" asp-route-userId="@report.AuthorId"
+                           class="btn btn-sm btn-danger">
+                            Delete Report
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 </section>

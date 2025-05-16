@@ -35,16 +35,6 @@
                 <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
             </section>
             <section class="form-group">
-                <label asp-for="Input.UserType"></label>
-                <br />
-                <select class="form-control" asp-for="Input.UserType">
-                    <option value="@UserRoleInput.User">User</option>
-                    <option value="@UserRoleInput.EventOrganizer">EventOrganizer</option>
-                </select>
-                <section><small class="text-dark">Note: EventOrganizer account must be approved by admin</small></section>
-                <span asp-validation-for="Input.UserType" class="text-danger"></span>
-            </section>
-            <section class="form-group">
                 <label asp-for="Input.Password"></label>
                 <input asp-for="Input.Password" class="form-control" />
                 <section>

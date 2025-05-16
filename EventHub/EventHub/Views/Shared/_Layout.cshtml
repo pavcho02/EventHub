@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Data.Models;
+@inject UserManager<User> UserManager;
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,22 +29,34 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @{
-                            if (User.IsInRole("EventOrganizer") || User.IsInRole("User"))
+                            var currentUser = User.Identity.IsAuthenticated ? await UserManager.GetUserAsync(User) : null;
+                            var roles = currentUser != null ? await UserManager.GetRolesAsync(currentUser) : new List<string>();
+
+                            if (roles.Contains("EventOrganizer"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
+                                    <a class="nav-link text-dark" asp-area="EventOrganizer" asp-controller="Events" asp-action="Index">Events</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Create">Create Event</a>
+                                    <a class="nav-link text-dark" asp-area="EventOrganizer" asp-controller="Events" asp-action="Create">Create Event</a>
                                 </li>
-                            }                        
-                            if(User.IsInRole("Admin"))
+                            }
+                            if (roles.Contains("User"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Requests" asp-action="Index">Requests</a>
+                                    <a class="nav-link text-dark" asp-controller="Events" asp-action="Index">Events</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Reports" asp-action="Index">Reports</a>
+                                    <a class="nav-link text-dark" asp-controller="Home" asp-action="UpgradeAccount">Upgrade to EventOrganizer</a>
+                                </li>
+                            }
+                            if (roles.Contains("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Requests" asp-action="Index">Requests</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Reports" asp-action="Index">Reports</a>
                                 </li>
                             }
                         }                        

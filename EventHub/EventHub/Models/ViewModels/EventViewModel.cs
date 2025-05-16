@@ -22,5 +22,10 @@ namespace EventHub.Models.ViewModels
             this.StartTime = startTime;
             this.EventType = eventType;
         }
+
+        public EventViewModel()
+        {
+            
+        }
     }
 }

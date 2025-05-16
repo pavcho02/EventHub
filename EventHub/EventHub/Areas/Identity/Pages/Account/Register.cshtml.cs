@@ -1,5 +1,5 @@
 using Data.Models;
-using EventHub.Common.Enums;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace EventHub.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly Business.IEmailSender _emailSender;
 
-        public RegisterModel(UserManager<User> userManager, SignInManager<User> signInManager,
+        public RegisterModel(UserManager<User> userManager, SignInManager<User> signInManager, 
             ILogger<RegisterModel> logger, Business.IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -31,6 +31,8 @@ namespace EventHub.Areas.Identity.Pages.Account
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
+
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public class InputModel
         {
@@ -45,21 +47,12 @@ namespace EventHub.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [Display(Name = "Username")]
-            [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
-            public string Username { get; set; }
-
-            [Required]
-            [Display(Name = "Account type")]
-            public UserRoleInput UserType { get; set; }
-
-            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
-            [Display(Name = "Date Of Birth")]
+            [Display(Name = "Date of Birth")]
             public DateOnly DateOfBirth { get; set; }
 
             [Required]
@@ -77,16 +70,17 @@ namespace EventHub.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
                 var user = new User
                 {
-                    //Username and email are the same
                     UserName = Input.Email,
                     Email = Input.Email,
                     FirstName = Input.FirstName,
@@ -98,7 +92,7 @@ namespace EventHub.Areas.Identity.Pages.Account
                     var result = await _userManager.CreateAsync(user, Input.Password);
                     if (result.Succeeded)
                     {
-                        result = await _userManager.AddToRoleAsync(user, Input.UserType.ToString());
+                        result = await _userManager.AddToRoleAsync(user, Data.Enums.UserRole.User.ToString());
                     }
 
                     if (result.Succeeded)

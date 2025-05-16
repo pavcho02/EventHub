@@ -42,5 +42,10 @@ namespace EventHub.Models.ViewModels
             this.EventOwnerEmail = eventOwnerEmail;
             this.EventReports = eventReports;
         }
+
+        public EventReportDetailsViewModel()
+        {
+            
+        }
     }
 }

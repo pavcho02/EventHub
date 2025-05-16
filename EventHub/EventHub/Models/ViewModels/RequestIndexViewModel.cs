@@ -14,5 +14,9 @@
             this.UserFirstName = userFirstName;
             this.UserLastName = userLastName;
         }
+        public RequestIndexViewModel()
+        {
+            
+        }
     }
 }

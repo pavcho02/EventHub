@@ -1,25 +1,43 @@
-﻿@using EventHub.Models.ViewModels;
-@model ICollection<EventIndexViewModel>;
+﻿@using EventHub.Models.ViewModels
+@model ICollection<EventIndexViewModel>
 
-<section>
-    <h1>Your events</h1>
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Type</th>
-            <th>Details</th>
-        </tr>
-        @{
-            foreach (var e in @Model) 
-            {
+@{
+    ViewData["Title"] = "Your Events";
+}
+
+<section class="container mt-4">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">You have no events created yet.</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
                 <tr>
-                    <td>@e.Title</td>
-                    <td>@e.EventType</td>
-                    <td>
-                        <a asp-area="EventOrganizer" asp-controller="Events" asp-action="Details" asp-route-eventId="@e.Id">more</a>
-                    </td>
+                    <th scope="col">Title</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Details</th>
                 </tr>
-            }
-        }
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var e in Model)
+                {
+                    <tr>
+                        <td>@e.Title</td>
+                        <td>@e.EventType</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary"
+                               asp-area="EventOrganizer"
+                               asp-controller="Events"
+                               asp-action="Details"
+                               asp-route-eventId="@e.Id">More</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </section>

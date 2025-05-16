@@ -1,5 +1,6 @@
 ﻿using Business;
 using Data.Models;
+using EventHub.Common.Mapping;
 using EventHub.Models.InputModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -17,11 +18,13 @@ namespace EventHub.Areas.EventOrganizer.Controllers
     {
         private readonly IEventBusiness eventBusiness;
         private readonly UserManager<User> userManager;
+        private readonly IMapper mapper;
 
-        public EventsController(IEventBusiness eventBusiness, UserManager<User> userManager)
+        public EventsController(IEventBusiness eventBusiness, UserManager<User> userManager, IMapper mapper)
         {
             this.eventBusiness = eventBusiness;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -29,15 +32,15 @@ namespace EventHub.Areas.EventOrganizer.Controllers
         {
             var currentUser = await userManager.GetUserAsync(User);
 
-            var model = eventBusiness.GetAllByCreator(currentUser.Id);
+            var model = eventBusiness.GetAllByCreator(currentUser.Id, mapper.MapToEventIndexViewModel);
 
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Details(string eventId)
+        public async Task<IActionResult> Details(string eventId)
         {
-            var model = eventBusiness.GetAsync(eventId);
+            var model = await eventBusiness.GetAsync(eventId, mapper.MapToEventDetailsViewModel);
 
             if (model == null)
             {
@@ -47,25 +50,37 @@ namespace EventHub.Areas.EventOrganizer.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(EventInputModel input)
+        //Fetch the event creation page
+        [HttpGet]
+        public IActionResult Create()
         {
-            var currentUser = await userManager.GetUserAsync(User);
+            return View(new EventInputModel());
+        }
 
-            Event e = new Event();
+        [HttpPost]
+        public async Task<IActionResult> Create(EventInputModel inputModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(inputModel);
+            }
 
-            e.Owner = currentUser;
-            e.OwnerId = currentUser.Id;
-            e.Title = input.Title;
-            e.Description = input.Description;
-            e.Location = input.Location;
-            e.StartTime = input.StartTime;
-            e.TargetAudience = input.TargetAudience;
-            e.EventType = input.EventType;
+            var currentUser = userManager.GetUserAsync(User).Result;
 
-            await eventBusiness.AddAsync(e);
+            var eventToCreate = new Event()
+            {
+                Title = inputModel.Title,
+                Description = inputModel.Description,
+                StartTime = inputModel.StartTime,
+                Location = inputModel.Location,
+                TargetAudience = inputModel.TargetAudience,
+                EventType = inputModel.EventType,
+                OwnerId = currentUser.Id
+            };
 
-            return RedirectToAction("Details", e.Id);
+            await eventBusiness.AddAsync(eventToCreate);
+
+            return RedirectToAction("Details", new { eventId = eventToCreate.Id });
         }
 
         //Fetch the event to be edited and the edit page
@@ -74,7 +89,7 @@ namespace EventHub.Areas.EventOrganizer.Controllers
         {
             var currentUser = await userManager.GetUserAsync(User);
 
-            var model = await eventBusiness.GetAsync(eventId);
+            var model = await eventBusiness.GetAsync(eventId, mapper.MapToEventInputModel);
 
             if (model == null)
             {
@@ -88,14 +103,18 @@ namespace EventHub.Areas.EventOrganizer.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string eventId, Event e)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(e);
+            }
+
             var currentUser = await userManager.GetUserAsync(User);
 
             await eventBusiness.UpdateAsync(e, currentUser.Id);
 
-            return RedirectToAction("Details", eventId);
+            return RedirectToAction("Details", new { eventId = eventId });
         }
 
-        [HttpPost]
         public async Task<IActionResult> Delete(string eventId)
         {
             var currentUser = await userManager.GetUserAsync(User);

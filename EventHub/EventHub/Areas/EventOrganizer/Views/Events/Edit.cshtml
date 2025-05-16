@@ -1,47 +1,53 @@
 ﻿@using Data.Enums
 @model EventHub.Models.InputModels.EventInputModel;
 
-<section>
-    <h1>Edit Event</h1>
-    <section>
-        <form asp-area="EventOrganizer" asp-controller="Events" asp-action="Update" method="post">
-            <section>
-                <label asp-for="@Model.Title"></label>
-                <input asp-for="@Model.Title"/>
-                <span asp-validation-for="@Model.Title"></span>
-            </section>
+@{
+    ViewData["Title"] = "Edit Event";
+}
 
-            <section>
-                <label asp-for="@Model.Description"></label>
-                <input asp-for="@Model.Description" />
-                <span asp-validation-for="@Model.Description"></span>
-            </section>
+<section class="container mt-5">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
 
-            <section>
-                <label asp-for="@Model.StartTime"></label>
-                <input type="datetime-local" asp-for="@Model.StartTime" />
-                <span asp-validation-for="@Model.StartTime"></span>
-            </section>
+    <form asp-area="EventOrganizer" asp-controller="Events" asp-action="Update" method="post" class="needs-validation" novalidate>
 
-            <section>
-                <label asp-for="@Model.Location"></label>
-                <input type="datetime-local" asp-for="@Model.Location" />
-                <span asp-validation-for="@Model.Location"></span>
-            </section>
+        <section class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </section>
 
-            <section>
-                <label asp-for="@Model.TargetAudience"></label>
-                <select asp-for="@Model.TargetAudience" class="form-control"
-                        asp-items="Html.GetEnumSelectList<TargetAudience>()"></select>
-            </section>
+        <section class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </section>
 
-            <section>
-                <label asp-for="@Model.EventType"></label>
-                <select asp-for="@Model.EventType" class="form-control"
-                        asp-items="Html.GetEnumSelectList<EventType>()"></select>
-            </section>
+        <section class="mb-3">
+            <label asp-for="StartTime" class="form-label"></label>
+            <input type="datetime-local" asp-for="StartTime" class="form-control" />
+            <span asp-validation-for="StartTime" class="text-danger"></span>
+        </section>
 
-            <button type="submit">Update Event</button>
-        </form>
-    </section>
+        <section class="mb-3">
+            <label asp-for="Location" class="form-label"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </section>
+
+        <section class="mb-3">
+            <label asp-for="TargetAudience" class="form-label"></label>
+            <select asp-for="TargetAudience" class="form-select"
+                    asp-items="Html.GetEnumSelectList<TargetAudience>()"></select>
+            <span asp-validation-for="TargetAudience" class="text-danger"></span>
+        </section>
+
+        <section class="mb-3">
+            <label asp-for="EventType" class="form-label"></label>
+            <select asp-for="EventType" class="form-select"
+                    asp-items="Html.GetEnumSelectList<EventType>()"></select>
+            <span asp-validation-for="EventType" class="text-danger"></span>
+        </section>
+
+        <button type="submit" class="btn btn-primary">Update Event</button>
+    </form>
 </section>

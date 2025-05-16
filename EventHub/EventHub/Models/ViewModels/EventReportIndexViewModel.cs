@@ -14,5 +14,10 @@
             this.EventTitle = title;
             this.reportsCount = reportsCount;
         }
+
+        public EventReportIndexViewModel()
+        {
+            
+        }
     }
 }

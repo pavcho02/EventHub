@@ -42,30 +42,24 @@ namespace Business
             }
         }
 
-        public async Task<Event?> GetAsync(string id)
+        public async Task<TModel> GetAsync<TModel>(string id, Func<Event, TModel> mapFunc)
         {
-            return await context.Events.FindAsync(id);
+            return mapFunc(await context.Events.FindAsync(id));
         }
 
-        public ICollection<Event> GetAllByCreator(string userId)
+        public ICollection<TModel> GetAllByCreator<TModel>(string userId, Func<Event, TModel> mapFunc)
         {
-            return context.Events.Where(e => e.OwnerId.Equals(userId)).ToList();
+            return context.Events.Where(e => e.OwnerId.Equals(userId)).Select(x => mapFunc(x)).ToList();
         }
 
-        public async Task<ICollection<Event>> GetAllAsync()
+        public async Task<ICollection<TModel>> GetAllAsync<TModel>(Func<Event, TModel> mapFunc)
         {
-            return await context.Events.ToListAsync();
+            return await context.Events.Select(x => mapFunc(x)).ToListAsync();
         }
 
         public ICollection<TModel> GetAllSummary<TModel>(Func<Event, TModel> mapFunc)
         {
             return context.Events.Select(mapFunc).ToList();
-        }
-
-
-        public bool IsAlreadyAdded(string name)
-        {
-            return context.Events.Any(e => e.Title.ToLower().Equals(name.ToLower()));
         }
 
         public async Task DeleteAsync(string eventId, string userId)
@@ -84,32 +78,21 @@ namespace Business
             }
         }
 
-        public async Task<double> CalculateEventRating(string eventId)
-        {
-            var reviews = await context.EventReviews.Where(er => er.EventId == eventId).ToListAsync();
-            if (reviews.Any())
-            {
-                return reviews.Average(r => r.Rating);
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public async Task<ICollection<Event>> GetRecentEvents()
+        public async Task<ICollection<TModel>> GetRecentEvents<TModel>(Func<Event,TModel> mapFunc)
         {
             return await context.Events
                 .Where(e => e.StartTime > DateTime.Now)
                 .OrderBy(e => e.StartTime)
+                .Select(x => mapFunc(x))
                 .Take(10)
                 .ToListAsync();
         }
 
-        public async Task<ICollection<Event>> GetTopRatedEvents()
+        public async Task<ICollection<TModel>> GetTopRatedEvents<TModel>(Func<Event, TModel> mapFunc)
         {
             return await context.Events
                 .OrderByDescending(e => e.Reviews.Average(r => r.Rating))
+                .Select(x => mapFunc(x))
                 .Take(10)
                 .ToListAsync();
         }

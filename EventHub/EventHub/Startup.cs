@@ -1,6 +1,8 @@
 ﻿using Business;
 using Data;
 using Data.Models;
+using EventHub.Common.Mapping;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventHub
@@ -41,6 +43,11 @@ namespace EventHub
             services.AddTransient<IEventReportBusiness, EventReportBusiness>();
             services.AddTransient<IEventBusiness, EventBusiness>();
             services.AddTransient<IEventReviewBusiness, EventReviewBusiness>();
+            services.AddTransient<IRoleRequestBusiness, RoleRequestBusiness>();
+            services.AddTransient<IParticipationBusiness, ParticipationBusiness>();
+
+            services.AddTransient<IMapper, Mapper>();
+
 
             services.AddTransient<IEmailSender>(x => new EmailSender(
                 Configuration.GetSection("SendGridEmailSender")["APIKey"],
@@ -53,8 +60,14 @@ namespace EventHub
             //Seed data during startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetRequiredService<EventHubDbContext>();
-                new EventHubDbContextSeeder(context).SeedAsync().GetAwaiter().GetResult();
+                var services = serviceScope.ServiceProvider;
+
+                var context = services.GetRequiredService<EventHubDbContext>();
+                var userManager = services.GetRequiredService<UserManager<User>>();
+                var roleManager = services.GetRequiredService<RoleManager<UserRole>>();
+
+                // Run seeders
+                new EventHubDbContextSeeder(context, userManager, roleManager).SeedAsync().GetAwaiter().GetResult();
             }
 
             if (env.IsDevelopment())
@@ -74,16 +87,15 @@ namespace EventHub
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapControllerRoute(
-                    name: "areas",
+                    name: "areaRoute",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");                
                 endpoints.MapRazorPages();
             });
         }

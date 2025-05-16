@@ -16,5 +16,10 @@ namespace EventHub.Models.ViewModels
             Title = eventTitle;
             EventType = eventType;
         }
+
+        public EventIndexViewModel()
+        {
+            
+        }
     }
 }

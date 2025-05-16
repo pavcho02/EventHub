@@ -11,9 +11,9 @@ namespace Data.Seeders
 {
     public class UserSeeder
     {
-        public async Task SeedAsync(EventHubDbContext context)
+        public async Task SeedAsync(UserManager<User> userManager)
         {
-            if(context.Users.Any())
+            if(userManager.Users.Any())
             {
                 return; // DB has been seeded
             }
@@ -21,21 +21,23 @@ namespace Data.Seeders
             var admin = new User
             {
                 Email = "pavlingeorgiev2002@gmail.com",
-                UserName = "admin",
+                UserName = "pavlingeorgiev2002@gmail.com",
                 NormalizedUserName = "ADMIN",
                 EmailConfirmed = true,
                 FirstName = "Admin",
                 LastName = "Admin",
+                DateOfBirth = new DateOnly(2001, 1, 1),
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 SecurityStamp = Guid.NewGuid().ToString()
             };
-            admin.PasswordHash = new PasswordHasher<User>().HashPassword(admin, "Admin123.");
 
-            await context.UserRoles.AddAsync(new IdentityUserRole<string>()
+            var password = "Admin123.";
+
+            var result = await userManager.CreateAsync(admin, password);
+            if (result.Succeeded)
             {
-                UserId = admin.Id,
-                RoleId = context.Roles.FirstOrDefault(x => x.Name == "Admin").Id
-            });
+                await userManager.AddToRoleAsync(admin, Enums.UserRole.Admin.ToString());
+            }
         }
             
     }

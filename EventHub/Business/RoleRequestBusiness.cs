@@ -29,7 +29,6 @@ namespace Business
         {
             if (await context.Users.FindAsync(userId) != null)
             {
-
                 var roleRequest = new RoleRequest
                 {
                     UserId = userId,
@@ -76,7 +75,7 @@ namespace Business
 
         public ICollection<TModel> GetAll<TModel>(Func<RoleRequest, TModel> mapFunc)
         {
-            return context.RoleRequests.Select(mapFunc).ToList();
+            return context.RoleRequests.Select(x => mapFunc(x)).ToList();
         }
     }
 }

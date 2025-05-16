@@ -15,22 +15,18 @@ namespace Business
 
         public Task UpdateAsync(Event e, string userId);
 
-        public Task<Event?> GetAsync(string id);
+        public Task<TModel> GetAsync<TModel>(string id, Func<Event, TModel> mapFunc);
 
-        public ICollection<Event> GetAllByCreator(string userId);
+        public ICollection<TModel> GetAllByCreator<TModel>(string userId, Func<Event, TModel> mapFunc);
 
-        public Task<ICollection<Event>> GetAllAsync();
+        public Task<ICollection<TModel>> GetAllAsync<TModel>(Func<Event, TModel> mapFunc);
 
         public ICollection<TModel> GetAllSummary<TModel>(Func<Event, TModel> mapFunc);
 
         public Task DeleteAsync(string eventId, string userId);
 
-        public bool IsAlreadyAdded(string name);
+        public Task<ICollection<TModel>> GetRecentEvents<TModel>(Func<Event, TModel> mapFunc);
 
-        public Task<double> CalculateEventRating(string eventId);
-
-        public Task<ICollection<Event>> GetRecentEvents();
-
-        public Task<ICollection<Event>> GetTopRatedEvents();
+        public Task<ICollection<TModel>> GetTopRatedEvents<TModel>(Func<Event, TModel> mapFunc);
     }
 }

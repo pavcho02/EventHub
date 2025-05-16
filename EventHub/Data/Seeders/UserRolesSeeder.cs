@@ -1,5 +1,5 @@
-﻿using Data.Enums;
-using Data.Models;
+﻿using Data.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,27 +10,25 @@ namespace Data.Seeders
 {
     public class UserRolesSeeder
     {
-        public async Task SeedAsync(EventHubDbContext context)
+        public async Task SeedAsync(RoleManager<UserRole> roleManager)
         {
-            if (context.Roles.Any())
+            if (roleManager.Roles.Any())
             {
                 return; // DB has been seeded
             }
 
-            var roles = new List<Models.UserRole>()
+            var roles = new List<UserRole>()
             {
-                new Models.UserRole{Name="Admin",NormalizedName="ADMIN", RoleType = Enums.UserRole.Admin},
-                new Models.UserRole{Name="EventOrganizer", NormalizedName= "EVENTORGANIZER", 
+                new UserRole{Name="Admin",NormalizedName="ADMIN", RoleType = Enums.UserRole.Admin},
+                new UserRole{Name="EventOrganizer", NormalizedName= "EVENTORGANIZER", 
                     RoleType = Enums.UserRole.EventOrganizer},
-                new Models.UserRole{Name="User",NormalizedName="USER", RoleType = Enums.UserRole.User},
+                new UserRole{Name="User",NormalizedName="USER", RoleType = Enums.UserRole.User},
             };
 
             foreach (var role in roles)
             {
-                await context.Roles.AddAsync(role);
+                await roleManager.CreateAsync(role);
             }
-
-            await context.SaveChangesAsync();
         }
     }
 }
