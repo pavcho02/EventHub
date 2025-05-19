@@ -41,16 +41,12 @@ namespace EventHub.Controllers
             return View(viewModel);
         }
 
-        [AutoValidateAntiforgeryToken]
-        [Authorize(Roles = "User")]
         [HttpGet]
         public IActionResult UpgradeAccount()
         {
             return View();
         }
 
-        [AutoValidateAntiforgeryToken]
-        [Authorize(Roles = "User")]
         [HttpPost]
         public async Task<IActionResult> UpgradeAccount(RoleRequestInputModel inputModel)
         {

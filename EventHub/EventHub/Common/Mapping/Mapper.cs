@@ -141,5 +141,17 @@ namespace EventHub.Common.Mapping
             }
         }
 
+        public EventUpdateModel MapToEventUpdateModel(Event eventItem)
+        {
+            if (eventItem == null)
+            {
+                return new EventUpdateModel();
+            }
+            else
+            {
+                return new EventUpdateModel(eventItem.Id, eventItem.Title, eventItem.Description, eventItem.StartTime,
+                    eventItem.Location, eventItem.TargetAudience, eventItem.EventType);
+            }
+        }
     }
 }

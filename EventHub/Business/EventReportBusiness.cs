@@ -35,9 +35,6 @@ namespace Business
             var eventInContext = await context.Events.FindAsync(eventId);
             if (eventInContext != null)
             {
-                context.Events.Remove(eventInContext);
-                await context.SaveChangesAsync();
-
                 // Send email to the event owner
                 var eventOwner = await context.Users.FindAsync(eventInContext.OwnerId);
                 if (eventOwner != null)
@@ -55,6 +52,16 @@ namespace Business
                 {
                     await emailSender.SendEventCancelationEmailAsync(participant.Email, eventInContext);
                 }
+
+                // Remove event, reports, reviews and participations
+                context.EventReports.Where(er => er.EventId == eventId).ToList()
+                    .ForEach(er => context.EventReports.Remove(er));
+                context.Participations.Where(p => p.EventId == eventId).ToList()
+                    .ForEach(p => context.Participations.Remove(p));
+                context.EventReviews.Where(er => er.EventId == eventId).ToList()
+                    .ForEach(er => context.EventReviews.Remove(er));
+                context.Events.Remove(eventInContext);
+                await context.SaveChangesAsync();
             }
         }
 

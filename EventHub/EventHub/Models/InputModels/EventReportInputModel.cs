@@ -8,7 +8,7 @@ namespace EventHub.Models.InputModels
         public string EventId { get; set; }
 
         [Required]
-        [Display(Name = "Decsription")]
+        [Display(Name = "Description")]
         [StringLength(maximumLength: 200, ErrorMessage = "Description cannot be longer than 200 characters.")]
         public string Description { get; set; }
     }

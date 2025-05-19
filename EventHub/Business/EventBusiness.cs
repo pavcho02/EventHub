@@ -28,14 +28,14 @@ namespace Business
 
         public async Task UpdateAsync(Event e, string userId)
         {
-            var eventInContext = await context.Events.FindAsync(e);
+            var eventInContext = await context.Events.FindAsync(e.Id);
             if (eventInContext != null && eventInContext.OwnerId == userId)
             {
                 context.Entry(eventInContext).CurrentValues.SetValues(e);
                 await context.SaveChangesAsync();
 
                 // Send email to all participants about the update
-                foreach (var p in e.Participants)
+                foreach (var p in eventInContext.Participants)
                 {
                     await emailSender.SendEventUpdateEmailAsync(p.User.Email, e);
                 }

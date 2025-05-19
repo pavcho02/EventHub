@@ -6,27 +6,28 @@
 <section class="container mt-5">
     <h2 class="mb-4">@ViewData["Title"]</h2>
 
-    <form asp-area="User" asp-controller="Events" asp-action="Review" method="post" class="needs-validation" novalidate>
+    <form asp-controller="Events" asp-action="Review" method="post" class="needs-validation" novalidate>
+        <input type="hidden" asp-for="@Model.EventId" />
         <section class="mb-3">
-            <label asp-for="Comment" class="form-label"></label>
-            <textarea asp-for="Comment" class="form-control" rows="4"></textarea>
-            <span asp-validation-for="Comment" class="text-danger"></span>
+            <label asp-for="@Model.Comment" class="form-label"></label>
+            <textarea asp-for="@Model.Comment" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="@Model.Comment" class="text-danger"></span>
         </section>
 
         <section class="mb-3">
-            <label asp-for="Rating" class="form-label">Rating (1-10)</label>
-            <select asp-for="Rating" class="form-select">
+            <label asp-for="@Model.Rating" class="form-label">Rating (1-10)</label>
+            <select asp-for="@Model.Rating" class="form-select">
                 @for (int i = 1; i <= 10; i++)
                 {
                     <option value="@i">@i</option>
                 }
             </select>
-            <span asp-validation-for="Rating" class="text-danger"></span>
+            <span asp-validation-for="@Model.Rating" class="text-danger"></span>
         </section>
 
         <button type="submit" class="btn btn-primary">Submit Review</button>
     </form>
-    <a asp-area="User" asp-controller="Events" asp-action="DeleteReview" asp-route-eventId="@Model.EventId" class="btn btn-danger">Delete</a>
+    <a asp-controller="Events" asp-action="DeleteReview" asp-route-eventId="@Model.EventId" class="btn btn-danger">Delete</a>
 </section>
 
 @section Scripts {

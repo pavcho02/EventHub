@@ -5,6 +5,7 @@ using EventHub.Models.InputModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace EventHub.Controllers
 {
@@ -74,6 +75,7 @@ namespace EventHub.Controllers
 
             if (!ModelState.IsValid)
             {
+                inputModel.Comment = "Nevalidno";
                 return View(inputModel);
             }
 
@@ -87,7 +89,14 @@ namespace EventHub.Controllers
                 EventId = inputModel.EventId
             };
 
-            await eventReviewBusiness.AddAsync(review);
+            if (currentUser.Reviews.Any(r => r.EventId == inputModel.EventId))
+            {
+                await eventReviewBusiness.UpdateAsync(review);
+            }
+            else
+            {
+                await eventReviewBusiness.AddAsync(review);
+            }                
 
             return RedirectToAction("Details", new { eventId = inputModel.EventId});
         }

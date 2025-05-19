@@ -89,7 +89,7 @@ namespace EventHub.Areas.EventOrganizer.Controllers
         {
             var currentUser = await userManager.GetUserAsync(User);
 
-            var model = await eventBusiness.GetAsync(eventId, mapper.MapToEventInputModel);
+            var model = await eventBusiness.GetAsync(eventId, mapper.MapToEventUpdateModel);
 
             if (model == null)
             {
@@ -101,18 +101,30 @@ namespace EventHub.Areas.EventOrganizer.Controllers
 
         //Updates event's data
         [HttpPost]
-        public async Task<IActionResult> Edit(string eventId, Event e)
+        public async Task<IActionResult> Edit(EventUpdateModel inputModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(e);
+                return View(inputModel);
             }
 
             var currentUser = await userManager.GetUserAsync(User);
 
-            await eventBusiness.UpdateAsync(e, currentUser.Id);
+            var eventToUpdate = new Event()
+            {
+                Id = inputModel.Id,
+                Title = inputModel.Title,
+                Description = inputModel.Description,
+                StartTime = inputModel.StartTime,
+                Location = inputModel.Location,
+                TargetAudience = inputModel.TargetAudience,
+                EventType = inputModel.EventType,
+                OwnerId = currentUser.Id
+            };
 
-            return RedirectToAction("Details", new { eventId = eventId });
+            await eventBusiness.UpdateAsync(eventToUpdate, currentUser.Id);
+
+            return RedirectToAction("Details", new { eventId = inputModel.Id });
         }
 
         public async Task<IActionResult> Delete(string eventId)

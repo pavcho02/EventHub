@@ -35,6 +35,13 @@ namespace EventHub
 
             }).AddRoles<UserRole>().AddEntityFrameworkStores<EventHubDbContext>();
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -87,6 +94,7 @@ namespace EventHub
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

@@ -25,5 +25,7 @@ namespace EventHub.Common.Mapping
         public EventInputModel MapToEventInputModel(Event eventItem);
 
         public EventIndexViewModel MapToEventIndexViewModel(Event eventItem);
+
+        public EventUpdateModel MapToEventUpdateModel(Event eventItem);
     }
 }
