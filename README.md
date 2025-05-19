@@ -37,6 +37,11 @@
 - Make sure your SMTP (SendGrid) settings are correct to enable email verification.
 - Admin and Event Organizer dashboards are located under the `Areas/Admin` and `Areas/EventOrganizer` routes.
 
+## Future improvements
+- Adding pagination
+- Adding sorting, filtering and searching
+- Adding external logins
+
 ---
 
 *Developed as a portfolio project to demonstrate ASP.NET Core MVC development skills.*
